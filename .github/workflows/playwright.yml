@@ -3,20 +3,20 @@ on:
   push:
     branches: [ main, master ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master ] #Run this workflow whenever someone pushes code or opens a Pull Request.
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  #GitHub creates a fresh Ubuntu Linux virtual machine to execute the workflow.
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v4  #downloads repository onto virtual machine.
+    - uses: actions/setup-node@v4 #installs Node.js.
       with:
         node-version: lts/*
     - name: Install dependencies
-      run: npm ci
+      run: npm ci  #CI should install exactly what's defined in package-lock.json, Removes old modules before installing
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install --with-deps #install dependancy browsers
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
